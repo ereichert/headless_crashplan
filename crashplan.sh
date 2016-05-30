@@ -1,10 +1,10 @@
 #!/bin/bash
 
 LOCAL="local"
-LOCALHOSTPROPS="localhost.ui.properties"
+LOCALHOSTPROPS="localhost.ui_info"
 RC01="172.16.1.20"
-RC01PROPS="rc01.ui.properties"
-UIPROPSLOC="/Applications/CrashPlan.app/Contents/Resources/Java/conf/ui.properties"
+RC01PROPS="rc01.ui_info"
+UIPROPSLOC="/Library/Application Support/CrashPlan/.ui_info"
 CPAPP="/Applications/CrashPlan.app/"
 
 function delete_crashplan_ui_properties {
@@ -14,7 +14,7 @@ function delete_crashplan_ui_properties {
 
 function copy_new_crashplan_conf {
 	echo "Copying $1 to CrashPlan conf."
-	cp $1 ${UIPROPSLOC}
+	sudo cp $1 "${UIPROPSLOC}"
 }
 
 function open_crashplan {
@@ -25,7 +25,7 @@ function run_rc01_config {
     echo "Starting CrashPlan UI with rc01 configuration."
 	copy_new_crashplan_conf ${RC01PROPS}
 	ssh -nNT -L 4200:localhost:4243 root@${RC01} &
-	open_crashplan 
+	open_crashplan
 }
 
 function run_localhost_config {
